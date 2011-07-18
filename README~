@@ -1,0 +1,62 @@
+Concurrency on a parking
+
+Description	
+---------------
+  
+The objective of this program is to implement an automatic parking control system using
+the Linux environment.
+Within the context of operating systems and efficient use of resources, the use of lightweight
+processes can reduce the cost of creating new processes, and allows concurrent execution of
+certain features, common to a wide range of applications. This program consists in
+implementing an access control application for a multi-store parking with different number of
+parking spaces per level.
+
+
+The resulting program will:
+---
+1.
+The main process must set the parameters of the parking using the parameters
+used during the invocation of the program (number of levels and number of parking spaces
+per level).
+2.
+The main process will prompt the user to introduce on the keyboard the number
+of cars trying to enter the parking. In case of typing 0, the program will finalize waiting for
+the remaining cars (waiting or in progress).
+3.
+If the number of cars introduced is greater than 0, the main process will create a
+thread for each car trying to enter the parking, and will return to step 2 to wait for more cars.
+4.
+Each thread is identified by a sequential number starting from 0. The identifier
+will increase throughout the main program execution. The functionality of each thread can be
+decomposed into the following steps:
+•
+When a car enters the parking, the corresponding thread should write to
+the output file the message "[N] in the parking, k vacancies", where N is the thread
+identifier and k the number of vacancies in the parking after the entry of N. If the
+parking is full, the thread should wait until a free space is available.
+•
+Once inside, the car needs to park at one of the levels. The thread selects
+a level beginning with the lower level of parking. In there is no vacancy at level p, a car
+looks for vacancies at the p+1 level. Level 1 corresponds to the lower parking level.
+When a vehicle arrives at level p, it will write the message "[N] arrives at level p, m
+free spaces on the level.", where N is the thread identifier, p the level, and m is the
+available number of free spaces.
+•
+Once parked, the thread will sleep a random time between 1 and 10
+seconds before leaving the parking lot. When a car leaves a level, it will write the
+message "[N] leaves level p, m free spaces on the level."
+•
+Finally the car leaves the parking and writes the message "[N] leaves the
+parking, k vacancies."
+The developed program will take as parameters the following arguments:
+1. Number of levels in the parking.
+2. Number of available parking spaces per level.
+3. Output file name.
+Thus, the parameters for the invocation of the program are:
+./parking <n_levels> <n_spaces> <output_filename>	
+  
+Example:
+$	
+   gcc -Wall parking.c -o parking -lpthread
+$ ./parking 3 5 output.txt
+
